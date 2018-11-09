@@ -3,6 +3,7 @@ package com.example.copicatkurilshika.controller;
 import com.example.copicatkurilshika.viberEntitys.ViberRequest;
 import com.example.copicatkurilshika.viberEntitys.ViberResponse;
 import com.example.copicatkurilshika.viberEntitys.ViberStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +14,23 @@ public class ApiController {
 
     private Random random = new Random();
 
-    @GetMapping("/test")
+    @Value("${email}")
+    private String testText;
+    @Value("${custom-responce-viber}")
+    private String customResponceViber;
+    @Value("${custom-responce}")
+    private String customResponce;
+
+    @GetMapping(value = "/test",produces = {"application/json"})
     public @ResponseBody String hello()
     {
-        return "it's works";
+        return testText;
+    }
+
+    @PostMapping(value = "/customResponce", produces = {"application/json"}, consumes = {"application/json"})
+    public  String custom(@RequestBody String request)
+    {
+        return customResponce;
     }
 
     @PostMapping(value = "/viber")
@@ -24,6 +38,13 @@ public class ApiController {
     {
         return ResponseEntity.ok(ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS).messageToken(generateToken()).build());
     }
+
+    @PostMapping(value = "/viber/customResponce", produces = {"application/json"})
+    public  String customForViber(@RequestBody ViberRequest viberRequest)
+    {
+        return customResponceViber;
+    }
+
 
    private String generateToken() {
         String token;
