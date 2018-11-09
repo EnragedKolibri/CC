@@ -24,29 +24,26 @@ public class AsyncRequestExecutionService {
     @Value("${drURL}")
     private String drURL;
 
-    String encoding;
-
-
     @Autowired
     @Qualifier("deliveredFutureRequestExecutionService")
-    FutureRequestExecutionService delivered;
+    private FutureRequestExecutionService delivered;
 
     @Autowired
     @Qualifier("seenFutureRequestExecutionService")
-    FutureRequestExecutionService seen;
+    private FutureRequestExecutionService seen;
 
     @Async("viberStatusSenderTaskExecutor")
     public void startFutureRequestExecutionService(String token) throws UnsupportedEncodingException {
 
-        StringEntity deliveredEntity = new StringEntity("{message_token:"+token+"},{status:0}");
-        StringEntity seenEntity = new StringEntity("{message_token:"+token+"},{status:1}");
+        StringEntity deliveredEntity = new StringEntity("{\"message_token\":\""+token+"\",\"status\":0}");
+        StringEntity seenEntity = new StringEntity("{\"message_token\":\""+token+"\",\"status\":1}");
 
         HttpPost deliveredRequest = new HttpPost(drURL);
         deliveredRequest.setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE);
         deliveredRequest.setEntity(deliveredEntity);
 
-        HttpPost seenRequest = new HttpPost();
-        deliveredRequest.setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE);
+        HttpPost seenRequest = new HttpPost(drURL);
+        seenRequest.setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE);
         seenRequest.setEntity(seenEntity);
 
         delivered.execute(deliveredRequest, null, r->r);

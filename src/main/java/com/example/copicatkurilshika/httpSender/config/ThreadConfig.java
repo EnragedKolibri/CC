@@ -19,7 +19,7 @@ public class ThreadConfig {
     private int maxPoolSize;
     @Value("${keepAlive}")
     private int keepAlive;
-    @Value("${viberStatusSenderTaskExecutor-threadNamePrefix}")
+    @Value("${threadNamePrefix}")
     private String threadNamePrefix;
 
     @Bean(name = "viberStatusSenderTaskExecutor")
