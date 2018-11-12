@@ -1,6 +1,6 @@
 package com.example.copicatkurilshika.controller;
 
-import com.example.copicatkurilshika.httpSender.services.AsyncRequestExecutionService;
+import com.example.copicatkurilshika.httpServices.AsyncRequestExecutionService;
 import com.example.copicatkurilshika.viberEntitys.ViberRequest;
 import com.example.copicatkurilshika.viberEntitys.ViberResponse;
 import com.example.copicatkurilshika.viberEntitys.ViberStatus;
@@ -19,8 +19,6 @@ public class ApiController {
 
     @Value("${test-responce}")
     private String testText;
-    @Value("${custom-responce-viber}")
-    private String customResponceViber;
     @Value("${custom-responce}")
     private String customResponce;
 
@@ -45,13 +43,6 @@ public class ApiController {
         asyncRequestExecutionService.startFutureRequestExecutionService(token);
         return ResponseEntity.ok(ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS).messageToken(token).build());
     }
-
-    @PostMapping(value = "/viber/customResponce", produces = {"application/json"})
-    public  String customForViber(@RequestBody ViberRequest viberRequest)
-    {
-        return customResponceViber;
-    }
-
 
    private String generateToken() {
         String token;

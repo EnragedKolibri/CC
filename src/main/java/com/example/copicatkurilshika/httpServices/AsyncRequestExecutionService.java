@@ -1,4 +1,4 @@
-package com.example.copicatkurilshika.httpSender.services;
+package com.example.copicatkurilshika.httpServices;
 import com.example.copicatkurilshika.viberEntitys.ViberResponse;
 import com.example.copicatkurilshika.viberEntitys.ViberStatus;
 import lombok.extern.log4j.Log4j2;

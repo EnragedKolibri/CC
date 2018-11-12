@@ -1,4 +1,4 @@
-package com.example.copicatkurilshika.httpSender.config;
+package com.example.copicatkurilshika.config;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.FutureRequestExecutionService;

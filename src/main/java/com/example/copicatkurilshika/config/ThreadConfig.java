@@ -1,4 +1,4 @@
-package com.example.copicatkurilshika.httpSender.config;
+package com.example.copicatkurilshika.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
