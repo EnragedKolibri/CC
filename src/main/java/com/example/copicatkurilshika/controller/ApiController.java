@@ -1,17 +1,22 @@
 package com.example.copicatkurilshika.controller;
 
-import com.example.copicatkurilshika.httpSender.services.AsyncRequestExecutionService;
 import com.example.copicatkurilshika.entities.ViberRequest;
 import com.example.copicatkurilshika.entities.ViberResponse;
 import com.example.copicatkurilshika.entities.ViberStatus;
+import com.example.copicatkurilshika.httpServices.AsyncRequestExecutionService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
+@Log4j2
 @RestController
 public class ApiController {
 
@@ -26,8 +31,7 @@ public class ApiController {
     private AsyncRequestExecutionService asyncRequestExecutionService;
 
     @GetMapping(value = "/test", produces = {"application/json"})
-    public
-    String hello() {
+    public String hello() {
         return testText;
     }
 
@@ -36,11 +40,12 @@ public class ApiController {
         return customResponse;
     }
 
-    @PostMapping(value = "/viber")
+    @PostMapping(value = "vibersrvc/1/send_message")
     public ResponseEntity<ViberResponse> post(@RequestBody ViberRequest viberRequest) throws UnsupportedEncodingException {
+        log.info("request: " + viberRequest);
         String token = generateToken();
         asyncRequestExecutionService.startFutureRequestExecutionService(token);
-        return ResponseEntity.ok(ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS).messageToken(token).build());
+        return ResponseEntity.ok(ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS.getStatus()).messageToken(token).build());
     }
 
     private String generateToken() {

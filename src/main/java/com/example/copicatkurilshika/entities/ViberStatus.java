@@ -1,5 +1,8 @@
 package com.example.copicatkurilshika.entities;
 
+import lombok.Getter;
+
+@Getter
 public enum ViberStatus {
 
         SRVC_SUCCESS(0),

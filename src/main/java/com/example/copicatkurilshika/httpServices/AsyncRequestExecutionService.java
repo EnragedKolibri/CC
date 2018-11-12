@@ -1,4 +1,5 @@
-package com.example.copicatkurilshika.httpSender.services;
+package com.example.copicatkurilshika.httpServices;
+
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -32,8 +33,8 @@ public class AsyncRequestExecutionService {
     @Async("viberStatusSenderTaskExecutor")
     public void startFutureRequestExecutionService(String token) throws UnsupportedEncodingException {
 
-        StringEntity deliveredEntity = new StringEntity("{\"message_token\":\""+token+"\",\"status\":0}");
-        StringEntity seenEntity = new StringEntity("{\"message_token\":\""+token+"\",\"status\":1}");
+        StringEntity deliveredEntity = new StringEntity("{\"message_token\":\"" + token + "\",\"status\":0}");
+        StringEntity seenEntity = new StringEntity("{\"message_token\":\"" + token + "\",\"status\":1}");
 
         HttpPost deliveredRequest = new HttpPost(drURL);
         deliveredRequest.setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE);
@@ -43,8 +44,10 @@ public class AsyncRequestExecutionService {
         seenRequest.setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE);
         seenRequest.setEntity(seenEntity);
 
-        delivered.execute(deliveredRequest, null, r->r);
-        seen.execute(seenRequest, null, r->r);
+        delivered.execute(deliveredRequest, null, r -> r);
+        log.info("delivered will sent: " + deliveredRequest);
+        seen.execute(seenRequest, null, r -> r);
+        log.info("seen will sent: " + seenRequest);
 
     }
 
