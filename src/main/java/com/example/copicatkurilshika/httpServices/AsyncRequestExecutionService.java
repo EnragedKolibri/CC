@@ -32,9 +32,24 @@ public class AsyncRequestExecutionService {
 
     @Async("viberStatusSenderTaskExecutor")
     public void startFutureRequestExecutionService(String token) throws UnsupportedEncodingException {
+        String del = "{" +
+                "\"message_token\":\"" + token + "\"," +
+                "\"message_status\":0," +
+                "\"message_time\":" + System.currentTimeMillis() + "," +
+                "\"phone_number\": \"380504490154\"," +
+                "\"service_id\": 3100" +
+                "}";
+        StringEntity deliveredEntity = new StringEntity(del);
 
-        StringEntity deliveredEntity = new StringEntity("{\"message_token\":\"" + token + "\",\"status\":0}");
-        StringEntity seenEntity = new StringEntity("{\"message_token\":\"" + token + "\",\"status\":1}");
+//        String see = "{\"message_token\":\"" + token + "\",\"message_status\":1}";
+        String see = "{" +
+                "\"message_token\":\"" + token + "\"," +
+                "\"message_status\":1," +
+                "\"message_time\":" + System.currentTimeMillis() + "," +
+                "\"phone_number\": \"380504490154\"," +
+                "\"service_id\": 3100" +
+                "}";
+        StringEntity seenEntity = new StringEntity(see);
 
         HttpPost deliveredRequest = new HttpPost(drURL);
         deliveredRequest.setHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE);
@@ -45,9 +60,9 @@ public class AsyncRequestExecutionService {
         seenRequest.setEntity(seenEntity);
 
         delivered.execute(deliveredRequest, null, r -> r);
-        log.info("delivered will sent: " + deliveredRequest);
+        log.info("delivered will sent: " + del);
         seen.execute(seenRequest, null, r -> r);
-        log.info("seen will sent: " + seenRequest);
+        log.info("seen will sent: " + see);
 
     }
 

@@ -20,6 +20,7 @@ public class ViberResponse {
 
     @JsonProperty("message_token")
     private String messageToken;
+//    @JsonProperty("message_status")
     private Integer status;
 
 

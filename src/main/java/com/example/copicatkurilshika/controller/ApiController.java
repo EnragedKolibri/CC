@@ -40,10 +40,12 @@ public class ApiController {
 
     @PostMapping(value = "vibersrvc/1/send_message")
     public ResponseEntity<ViberResponse> post(@RequestBody ViberRequest viberRequest) throws UnsupportedEncodingException {
-        log.info("request: " + viberRequest);
         String token = generateToken();
+        ViberResponse viberResponse = ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS.getStatus()).messageToken(token).build();
+        ResponseEntity<ViberResponse> resp = ResponseEntity.ok(viberResponse);
+        log.info("Request: " + viberRequest + "\t Response: " + viberResponse);
         asyncRequestExecutionService.startFutureRequestExecutionService(token);
-        return ResponseEntity.ok(ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS.getStatus()).messageToken(token).build());
+        return resp;
     }
 
     private String generateToken() {
