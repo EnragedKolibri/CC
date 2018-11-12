@@ -1,11 +1,7 @@
-package com.example.copicatkurilshika.viberEntitys;
-
-
+package com.example.copicatkurilshika.entities;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 
 @Data
 @Builder
@@ -13,11 +9,12 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class ViberResponse {
+public class ViberMessage {
 
-    @JsonProperty("message_token")
-    private String messageToken;
-    private ViberStatus status;
+    //@ApiModelProperty(notes = "Some text", example = "a message for our viber user")
+   // @JsonProperty("#txt")
+    private String txt;
+
 
 
 }

@@ -1,9 +1,6 @@
-package com.example.copicatkurilshika.httpServices;
-import com.example.copicatkurilshika.viberEntitys.ViberResponse;
-import com.example.copicatkurilshika.viberEntitys.ViberStatus;
+package com.example.copicatkurilshika.httpSender.services;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.FutureRequestExecutionService;
 import org.springframework.beans.factory.annotation.Autowired;

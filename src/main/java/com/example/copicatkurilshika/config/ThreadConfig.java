@@ -17,7 +17,7 @@ public class ThreadConfig {
     private int corePoolSize;
     @Value("${maxPoolSize}")
     private int maxPoolSize;
-    @Value("${keepAlive}")
+    @Value("${keepAliveSeconds}")
     private int keepAlive;
     @Value("${threadNamePrefix}")
     private String threadNamePrefix;

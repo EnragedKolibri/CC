@@ -1,4 +1,4 @@
-package com.example.copicatkurilshika.viberEntitys;
+package com.example.copicatkurilshika.entities;
 
 public enum ViberStatus {
 
