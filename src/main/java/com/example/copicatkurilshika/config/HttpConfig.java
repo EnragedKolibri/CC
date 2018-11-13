@@ -15,7 +15,7 @@ public class HttpConfig {
     private long maxIdleConnectionTime;
     @Value("${keepAliveSeconds}")
     private int keepAliveSeconds;
-    @Value("${keepAliveSeconds}")
+    @Value("${queueCapacity}")
     private int queueCapacity;
 
     @Value("${deliveredcorePoolSize}")

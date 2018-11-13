@@ -20,18 +20,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigUtils {
 
-    public static ThreadPoolTaskExecutor threadPoolTaskExecutor(int coreSize, int maxSize, int queueCapacity, int keepAliveSeconds) {
-        ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
-        pool.setCorePoolSize(coreSize);
-        pool.setMaxPoolSize(maxSize);
-        pool.setQueueCapacity(queueCapacity);
-        pool.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        pool.setWaitForTasksToCompleteOnShutdown(true);
-        pool.setKeepAliveSeconds(keepAliveSeconds);
-        pool.setAllowCoreThreadTimeOut(true);
-        return pool;
-    }
-
     public static PoolingHttpClientConnectionManager poolingHttpClientConnectionManager(int maxTotalSize, int defaultMaxPerRoute, boolean rejectBadSsl) throws Exception {
         PoolingHttpClientConnectionManager cm;
         if (rejectBadSsl) {
@@ -49,6 +37,18 @@ public class ConfigUtils {
         cm.setMaxTotal(maxTotalSize);
         cm.setDefaultMaxPerRoute(defaultMaxPerRoute);
         return cm;
+    }
+
+    public static ThreadPoolTaskExecutor threadPoolTaskExecutor(int coreSize, int maxSize, int queueCapacity, int keepAliveSeconds) {
+        ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
+        pool.setCorePoolSize(coreSize);
+        pool.setMaxPoolSize(maxSize);
+        pool.setQueueCapacity(queueCapacity);
+        pool.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        pool.setWaitForTasksToCompleteOnShutdown(true);
+        pool.setKeepAliveSeconds(keepAliveSeconds);
+        pool.setAllowCoreThreadTimeOut(true);
+        return pool;
     }
 
     public static HttpClient httpClient(PoolingHttpClientConnectionManager poolingHttpClientConnectionManager,
