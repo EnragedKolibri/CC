@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 
+import static com.example.copicatkurilshika.constants.Common.*;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -41,7 +42,6 @@ public class AsyncRequestExecutionService {
                 "}";
         StringEntity deliveredEntity = new StringEntity(del);
 
-//        String see = "{\"message_token\":\"" + token + "\",\"message_status\":1}";
         String see = "{" +
                 "\"message_token\":\"" + token + "\"," +
                 "\"message_status\":1," +
@@ -60,11 +60,9 @@ public class AsyncRequestExecutionService {
         seenRequest.setEntity(seenEntity);
 
         delivered.execute(deliveredRequest, null, r -> r);
-        log.info("delivered will sent: " + del);
+        log.info(ANSI_PURPLE + token + ANSI_RESET + " delivered will sent: " + ANSI_GREEN + del + ANSI_RESET);
         seen.execute(seenRequest, null, r -> r);
-        log.info("seen will sent: " + see);
-
+        log.info(ANSI_PURPLE + token + ANSI_RESET + " seen will sent: " + ANSI_GREEN + see + ANSI_RESET);
     }
-
 
 }

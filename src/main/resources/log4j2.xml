@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{dd-MMM-yyyy HH:mm:ss} - %-5p | %10.10t | %c{1.}|| %m%n
+        </Property>
+        <Property name="CONSOLE_LOG_PATTERN">
+            %d{dd-MMM-yyyy HH:mm:ss} - %highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow
+            bold, INFO=green, DEBUG=green bold, TRACE=blue} | %10.10t | %c{1.}|| %m%n
+        </Property>
+    </Properties>
+    <Appenders>
+
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout charset="UTF-8" pattern="${CONSOLE_LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="server.log" filePattern="server-%d{yyyyMMdd-HH}-%i.log">
+            <PatternLayout charset="UTF-8" pattern="${CONSOLE_LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+
+    </Appenders>
+    <Loggers>
+
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+
+        <logger name="com.example.copicatkurilshika" additivity="false" level="DEBUG">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFile"/>
+        </logger>
+
+        <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" additivity="false" level="DEBUG">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFile"/>
+        </logger>
+    </Loggers>
+
+</Configuration>
