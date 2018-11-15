@@ -39,7 +39,7 @@ public class ConfigUtils {
         return cm;
     }
 
-    public static ThreadPoolTaskExecutor threadPoolTaskExecutor(int coreSize, int maxSize, int queueCapacity, int keepAliveSeconds) {
+    public static ThreadPoolTaskExecutor threadPoolTaskExecutor(int coreSize, int maxSize, int queueCapacity, int keepAliveSeconds, int priority) {
         ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
         pool.setCorePoolSize(coreSize);
         pool.setMaxPoolSize(maxSize);
@@ -48,6 +48,7 @@ public class ConfigUtils {
         pool.setWaitForTasksToCompleteOnShutdown(true);
         pool.setKeepAliveSeconds(keepAliveSeconds);
         pool.setAllowCoreThreadTimeOut(true);
+        pool.setThreadPriority(priority);
         return pool;
     }
 

@@ -43,7 +43,7 @@ public class ApiController {
         String token = generateToken();
         ViberResponse viberResponse = ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS.getStatus()).messageToken(token).build();
         ResponseEntity<ViberResponse> resp = ResponseEntity.ok(viberResponse);
-        log.info("Request: " + viberRequest + "\t Response: " + viberResponse);
+//        log.info("Request: " + viberRequest + "\t Response: " + viberResponse);
         asyncRequestExecutionService.startFutureRequestExecutionService(token);
         return resp;
     }

@@ -29,6 +29,7 @@ public class ThreadConfig {
         executor.setMaxPoolSize(maxPoolSize);
         executor.setKeepAliveSeconds(keepAlive);
         executor.setThreadNamePrefix(threadNamePrefix);
+        executor.setThreadPriority(7);
         executor.initialize();
         return executor;
     }
