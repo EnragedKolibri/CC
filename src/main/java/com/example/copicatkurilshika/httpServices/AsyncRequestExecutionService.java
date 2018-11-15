@@ -139,7 +139,7 @@ public class AsyncRequestExecutionService {
         public void run() {
             long res = request.getAndSet(0);
             long deliv = delivSend.getAndSet(0);
-            log.info("req per min: " + ANSI_PURPLE + res + ANSI_RESET + " deliv per min: " + ANSI_CYAN + deliv + ANSI_RESET);
+            log.info("processed req per min: " + ANSI_PURPLE + res + ANSI_RESET + " deliv per min: " + ANSI_CYAN + deliv + ANSI_RESET);
             FutureRequestExecutionMetrics metrics = delivered.metrics();
             log.info("delivery metrics: " + ANSI_YELLOW + metrics + ANSI_RESET);
         }

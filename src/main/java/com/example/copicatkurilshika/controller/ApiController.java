@@ -4,14 +4,25 @@ import com.example.copicatkurilshika.entities.ViberRequest;
 import com.example.copicatkurilshika.entities.ViberResponse;
 import com.example.copicatkurilshika.entities.ViberStatus;
 import com.example.copicatkurilshika.httpServices.AsyncRequestExecutionService;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.http.impl.client.FutureRequestExecutionMetrics;
+import org.apache.http.impl.client.FutureRequestExecutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static com.example.copicatkurilshika.constants.Common.*;
+import static com.example.copicatkurilshika.constants.Common.ANSI_RESET;
 
 @Log4j2
 @RestController
@@ -19,6 +30,8 @@ import java.util.Random;
 public class ApiController {
 
     private Random random = new Random();
+
+    private static AtomicLong request = new AtomicLong();
 
     @Value("${test-response}")
     private String testText;
@@ -40,6 +53,7 @@ public class ApiController {
 
     @PostMapping(value = "vibersrvc/1/send_message")
     public ResponseEntity<ViberResponse> post(@RequestBody ViberRequest viberRequest) throws UnsupportedEncodingException {
+        request.incrementAndGet();
         String token = generateToken();
         ViberResponse viberResponse = ViberResponse.builder().status(ViberStatus.SRVC_SUCCESS.getStatus()).messageToken(token).build();
         ResponseEntity<ViberResponse> resp = ResponseEntity.ok(viberResponse);
@@ -54,5 +68,25 @@ public class ApiController {
         return token;
     }
 
+    @PostConstruct
+    public void counter() {
+        ThroughputService t = new ThroughputService();
+
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleAtFixedRate(t, 0, 1, TimeUnit.MINUTES);
+    }
+
+    @AllArgsConstructor
+    static class ThroughputService implements Runnable {
+
+
+
+        @Override
+        public void run() {
+            long res = request.getAndSet(0);
+            log.info("controller req per min: " + ANSI_PURPLE + res + ANSI_RESET);
+        }
+
+    }
 
 }
